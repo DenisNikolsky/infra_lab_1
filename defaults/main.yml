@@ -1,0 +1,27 @@
+---
+opensearch_version: "3.8.0"
+opensearch_dashboards_version: "3.8.0"
+opensearch_arch: "x64"
+
+opensearch_cluster_name: "opensearch-single"
+opensearch_node_name: "{{ inventory_hostname }}"
+opensearch_bind_host: "0.0.0.0"
+opensearch_http_port: 9200
+opensearch_transport_port: 9300
+opensearch_heap_size: "1g"
+
+opensearch_dashboards_host: "0.0.0.0"
+opensearch_dashboards_port: 5601
+
+# Для лабораторной проверки без авторизации.
+# В production security лучше не отключать.
+opensearch_security_disabled: true
+
+opensearch_wait_retries: 30
+opensearch_wait_delay: 5
+
+opensearch_download_url: >-
+  https://artifacts.opensearch.org/releases/bundle/opensearch/{{ opensearch_version }}/opensearch-{{ opensearch_version }}-linux-{{ opensearch_arch }}.tar.gz
+
+opensearch_dashboards_download_url: >-
+  https://artifacts.opensearch.org/releases/bundle/opensearch-dashboards/{{ opensearch_dashboards_version }}/opensearch-dashboards-{{ opensearch_dashboards_version }}-linux-{{ opensearch_arch }}.tar.gz

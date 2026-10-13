@@ -1,0 +1,12 @@
+---
+- name: Install OpenSearch and Dashboards
+  ansible.builtin.import_tasks: install.yml
+
+- name: Configure OpenSearch and Dashboards
+  ansible.builtin.import_tasks: configure.yml
+
+- name: Configure systemd services
+  ansible.builtin.import_tasks: service.yml
+
+- name: Verify OpenSearch health
+  ansible.builtin.import_tasks: verify.yml

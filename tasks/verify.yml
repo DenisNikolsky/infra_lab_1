@@ -1,0 +1,18 @@
+---
+- name: Wait for OpenSearch API
+  ansible.builtin.uri:
+    url: "http://127.0.0.1:{{ opensearch_http_port }}/_cluster/health"
+    method: GET
+    status_code: 200
+    return_content: true
+  register: opensearch_health
+  until:
+    - opensearch_health.status == 200
+    - opensearch_health.json.status in ["green", "yellow"]
+  retries: "{{ opensearch_wait_retries }}"
+  delay: "{{ opensearch_wait_delay }}"
+  changed_when: false
+
+- name: Show OpenSearch cluster health
+  ansible.builtin.debug:
+    var: opensearch_health.json

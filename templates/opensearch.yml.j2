@@ -1,0 +1,13 @@
+cluster.name: {{ opensearch_cluster_name }}
+node.name: {{ opensearch_node_name }}
+
+network.host: {{ opensearch_bind_host }}
+http.port: {{ opensearch_http_port }}
+transport.port: {{ opensearch_transport_port }}
+
+discovery.type: single-node
+
+plugins.security.disabled: {{ opensearch_security_disabled | lower }}
+
+path.data: /var/lib/opensearch
+path.logs: /var/log/opensearch
