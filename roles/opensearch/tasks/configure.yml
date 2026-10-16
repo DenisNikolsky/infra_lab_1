@@ -1,0 +1,47 @@
+---
+- name: Set vm.max_map_count
+  ansible.builtin.command:
+    cmd: sysctl -w vm.max_map_count=262144
+  changed_when: false
+
+- name: Persist vm.max_map_count
+  ansible.builtin.lineinfile:
+    path: /etc/sysctl.d/99-opensearch.conf
+    line: "vm.max_map_count=262144"
+    create: true
+    mode: "0644"
+
+- name: Configure OpenSearch
+  ansible.builtin.template:
+    src: opensearch.yml.j2
+    dest: /etc/opensearch/opensearch.yml
+    owner: opensearch
+    group: opensearch
+    mode: "0640"
+  notify: restart opensearch
+
+- name: Ensure jvm.options.d exists
+  ansible.builtin.file:
+    path: /etc/opensearch/jvm.options.d
+    state: directory
+    owner: opensearch
+    group: opensearch
+    mode: "0755"
+
+- name: Configure JVM heap
+  ansible.builtin.template:
+    src: jvm.options.j2
+    dest: /etc/opensearch/jvm.options.d/heap.options
+    owner: opensearch
+    group: opensearch
+    mode: "0644"
+  notify: restart opensearch
+
+- name: Configure OpenSearch Dashboards
+  ansible.builtin.template:
+    src: opensearch_dashboards.yml.j2
+    dest: /etc/opensearch-dashboards/opensearch_dashboards.yml
+    owner: opensearch
+    group: opensearch
+    mode: "0640"
+  notify: restart opensearch-dashboards

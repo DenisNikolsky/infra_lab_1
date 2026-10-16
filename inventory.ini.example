@@ -1,0 +1,2 @@
+[opensearch]
+<IP_WINDOWS_HOST> ansible_port=2222 ansible_user=<USER> ansible_password=<PASSWORD> ansible_become_password=<PASSWORD> ansible_ssh_common_args='-o StrictHostKeyChecking=no'

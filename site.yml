@@ -1,0 +1,6 @@
+---
+- name: Install OpenSearch single-node
+  hosts: opensearch
+  become: true
+  roles:
+    - opensearch
